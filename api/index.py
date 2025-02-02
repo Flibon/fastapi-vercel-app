@@ -14,19 +14,26 @@ app.add_middleware(
 )
 
 # Load the marks data from JSON
-with open('marks.json', 'r') as f:
-    marks_data = json.load(f)
+try:
+    with open('marks.json', 'r') as f:
+        marks_data = json.load(f)
+    print("Data loaded successfully:", marks_data)  # Debug statement
+except Exception as e:
+    print("Error loading JSON:", e)
 
 @app.get("/api")
 def get_marks(request: Request):
     names = request.query_params.getlist('name')
+    print("Received names:", names)  # Debug statement
     marks_list = []
 
     for name in names:
         mark_entry = next((item for item in marks_data if item["name"].lower() == name.lower()), None)
         if mark_entry:
+            print(f"Found {name}: {mark_entry['marks']}")  # Debug statement
             marks_list.append(mark_entry["marks"])
         else:
-            marks_list.append(None)  # Return None if the name isn't found
+            print(f"{name} not found in data.")  # Debug statement
+            marks_list.append(None)
 
     return {"marks": marks_list}
