@@ -1,0 +1,16 @@
+name: Demo GitHub Action
+
+on:
+  push:
+    branches:
+      - main  # Trigger the action on push to the main branch
+
+jobs:
+  test:
+    runs-on: ubuntu-latest
+    steps:
+      - name: Checkout code
+        uses: actions/checkout@v3
+        
+      - name: 21f3000756@ds.study.iitm.ac.in
+        run: echo "Hello, world! This action is triggered!"
